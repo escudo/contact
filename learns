@@ -1,0 +1,75 @@
+pull data from MY smartmeter through the contact flash app on my contact account page.
+serialise in a useful format (thinking json), and regraph it with d3
+
+page source shows the flash request with my account number as a string - below returns as amf
+
+
+#############  PYAMF ON ADOBE AMF  #############################################
+
+The Adobe Integratedl Runtime and Adobe Flash Player use AMF to communicate between an application and a remote server.
+AMF encodes remote procedure calls (RPC) into a compact binary representation that can be transferred over HTTP/HTTPS
+or the RTMP/RTMPS protocol. Objects and data values are serialized into this binary format, which increases performance,
+allowing applications to load data up to 10 times faster than with text-based formats such as XML or SOAP
+
+this is the data in format returned:
+/3/onResult������	�I
+3wnz.co.contactenergy.onlineservices.dto.DailyConsumptionData	date	nameconsumption22-12-2013@=9XbN
+23-12-2013
+@8z�G�
+24-12-2013@7V�+J
+25-12-2013@'�$�/�
+26-12-2013@(N��+
+27-12-2013@'^5?|�
+28-12-2013
+29-12-2013
+30-12-2013@6�fffff
+31-12-2013@A�(�\
+01-01-2014@5�$�/
+
+no good. hence why pyamf (python 2 only) needed
+
+##############  FROM THE CONTACT SITE  ##########################################
+
+Request URL:https://www.contactenergy.co.nz/web/messagebroker/legacyamfsecure
+Request Method:POST
+Status Code:200 OK
+Request Headersview source
+Accept:*/*
+Accept-Encoding:gzip,deflate,sdch
+Accept-Language:en-US,en;q=0.8
+Connection:keep-alive
+Content-Length:82
+Content-Type:application/x-amf
+Cookie:JSESSIONID=0001tzHOxuxndcM09Xww33IlB4V:-AJ459J; __utma=132100048.2068725630.1396344430.1396344430.1396344430.1; __utmb=132100048.14.9.1396345659851; __utmc=132100048; __utmz=132100048.1396344430.1.1.utmcsr=(direct)|utmccn=(direct)|utmcmd=(none); __utmv=132100048.|1=Customer%20Type=Residential=1^2=Meter%20Type=SmartMeter%20Customer=1
+Host:www.contactenergy.co.nz
+Origin:https://www.contactenergy.co.nz
+Referer:https://www.contactenergy.co.nz/web/flash/consumption/consumption_v20121220.swf
+User-Agent:Mozilla/5.0 (Windows NT 6.1; WOW64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/33.0.1750.154 Safari/537.36
+Request Payload
+#onlineservices.getHourlyConsumption/4
+
+4101114019
+30-03-2014
+Response Headersview source
+Connection:Keep-Alive
+Content-Language:en-US
+Content-Length:964
+Content-Type:application/x-amf
+Date:Tue, 01 Apr 2014 09:48:10 GMT
+Keep-Alive:timeout=10, max=99
+Server:IBM_HTTP_Server
+
+
+<object type="application/x-shockwave-flash" data="/web/flash/consumption/consumption_v20121220.swf" width="590" height="350">
+								<param name="flashvars" value="remotingURL=https://www.contactenergy.co.nz/web/messagebroker/legacyamfsecure&amp;consumerNumber=4101114019&amp;electricity=true&amp;gas=false&amp;hasSmartMeter=true&amp;timeoutPeriod=100000&amp;googleAnalytics=UA-872337-2&amp;includeGoogleAnalytics=true">
+								<param name="wmode" value="opaque">
+							<!--<![endif]-->
+
+							<!-- alternative content -->
+								<a href="http://www.adobe.com/go/getflashplayer" onclick="javascript:window.open('http://www.adobe.com/go/getflashplayer');return false;">
+									<img src="/web/images/onlinehomecheck/get_flash_player.gif" alt="Get Adobe Flash player" height="33" width="112">
+								</a>
+							<!-- //alternative content -->
+
+							<!--[if !IE]>-->
+								</object>
